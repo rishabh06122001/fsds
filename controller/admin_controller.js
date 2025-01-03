@@ -227,10 +227,44 @@ const addTrainOrCoach = async (req, res) => {
   }
 };
 
+const getCoachesByTrainNumber = async (req, res) => {
+  const { train_number } = req.body;
+
+  // Validate input
+  if (!train_number) {
+    return res.status(400).json({
+      error: "Train number is required",
+    });
+  }
+
+  try {
+    // Find the train by train_number
+    const train = await Train.findOne({ train_number });
+
+    if (!train) {
+      return res.status(404).json({
+        error: "Train not found",
+      });
+    }
+
+    // Return the list of coaches
+    return res.status(200).json({
+      message: `Coaches for train number ${train_number}`,
+      data: train.coaches,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "Internal server error",
+      details: error.message,
+    });
+  }
+};
+
 module.exports = {
   regsiterController,
   loginController,
   addUrl,
   getFSDSResponse,
   addTrainOrCoach,
+  getCoachesByTrainNumber,
 };
