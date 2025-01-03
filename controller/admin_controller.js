@@ -243,7 +243,7 @@ const getCoachesByTrainNumber = async (req, res) => {
 
     if (!train) {
       return res.status(200).json({
-        error: "Train not found",
+        message: "Train not found",
       });
     }
 
