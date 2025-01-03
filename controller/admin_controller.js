@@ -242,7 +242,7 @@ const getCoachesByTrainNumber = async (req, res) => {
     const train = await Train.findOne({ train_number });
 
     if (!train) {
-      return res.status(404).json({
+      return res.status(200).json({
         error: "Train not found",
       });
     }
